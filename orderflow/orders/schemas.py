@@ -5,8 +5,9 @@ from drf_spectacular.utils import (
     OpenApiTypes,
     extend_schema,
 )
+
 # Shared error shape from users app
-from users.schemas import APIErrorSerializer  # noqa
+from orderflow.users.schemas import APIErrorSerializer  # noqa
 
 from .serializers import OrderCreateSerializer, OrderReadSerializer, OrderUpdateSerializer
 
