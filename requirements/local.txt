@@ -1,0 +1,26 @@
+-r base.txt
+
+# Code quality
+# ------------------------------------------------------------------------------
+flake8~=7.3.0  # https://github.com/PyCQA/flake8
+flake8-isort~=6.1.2  # https://github.com/gforcada/flake8-isort
+black>=25.1,<26.0  # https://github.com/psf/black
+
+# LSP
+# ------------------------------------------------------------------------------
+python-lsp-server~=1.13.1  # https://github.com/python-lsp/python-lsp-server
+python-lsp-black~=2.0.0  # https://github.com/python-lsp/python-lsp-black
+
+# Visual tools (local only)
+# ------------------------------------------------------------------------------
+django-debug-toolbar~=6.0.0  # https://github.com/jazzband/django-debug-toolbar
+
+# Dev helpers (optional)
+# ------------------------------------------------------------------------------
+django-extensions>=4.1,<5.0  # https://github.com/django-extensions/django-extensions
+
+# Test
+# ------------------------------------------------------------------------------
+pytest>=8.4,<9.0  # https://github.com/pytest-dev/pytest
+pytest-django>=4.11,<5.0  # https://github.com/pytest-dev/pytest-django
+factory-boy>=3.3,<4.0  # https://github.com/FactoryBoy/factory_boy
