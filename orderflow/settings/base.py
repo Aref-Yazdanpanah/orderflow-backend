@@ -76,6 +76,7 @@ THIRD_PARTY_APPS = [
 LOCAL_APPS = [
     "orderflow.contrib",
     "orderflow.users",
+    "orderflow.orders",
 ]
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#installed-apps
@@ -175,13 +176,14 @@ REST_FRAMEWORK = {
     "DEFAULT_THROTTLE_RATES": {
         "users": "120/minute",
         "authentication": "6/minute",
+        "orders": "50/minute",
     },
     "EXCEPTION_HANDLER": "orderflow.contrib.exception_handlers.error_handler",
 }
 
 # JWT Settings
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=58),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": True,
     "BLACKLIST_AFTER_ROTATION": True,
