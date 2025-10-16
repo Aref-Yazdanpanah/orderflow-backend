@@ -95,16 +95,7 @@ test:
 >  docker-compose -f $(LOCAL_DOCKER_COMPOSE) -p $(PROJECT_NAME) exec web \
 >  sh -lc 'cd /app; \
 >  set -a; [ -f .env ] && . ./.env; set +a; \
->  export DJANGO_SETTINGS_MODULE=$${DJANGO_SETTINGS_MODULE:-orderflow.settings.test}; \
+>  export DJANGO_SETTINGS_MODULE=$${DJANGO_SETTINGS_MODULE:-orderflow.settings.local}; \
 >  export PYTHONPATH=/app:$${PYTHONPATH}; \
 >  pytest'
 .PHONY: test
-
-
-test-slow:
->  docker-compose -f $(LOCAL_DOCKER_COMPOSE) -p $(PROJECT_NAME) exec web \
->  sh -lc 'cd /app; \
->  export DJANGO_SETTINGS_MODULE=$${DJANGO_SETTINGS_MODULE:-orderflow.settings.test}; \
->  export PYTHONPATH=/app:$${PYTHONPATH}; \
->  pytest -m slow'
-.PHONY: test test-slow
