@@ -7,11 +7,13 @@ from django.urls import include, path, re_path
 from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
 
 from orderflow.contrib.routers import ExtendableRouter
+from orderflow.orders.urls import router as orders_router
 from orderflow.users.urls import router as users_router
 
 root_router = ExtendableRouter()
 for r in [
     users_router,
+    orders_router,
 ]:
     root_router.extend(r)
 
