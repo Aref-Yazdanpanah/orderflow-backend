@@ -4,6 +4,7 @@ from rest_framework.filters import OrderingFilter
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from . import schemas  # method-level docs live here
 from .filters import OrderFilter
 from .permissions import IsOwnerOrHasOrderPerms
 from .selectors import order_base_qs, scope_for_user
@@ -40,6 +41,17 @@ class OrderViewSetV1(viewsets.ModelViewSet):
             "destroy": OrderReadSerializer,
         }[self.action]
 
+    # ---------------- Swagger UI: method-level decorators ----------------
+
+    @schemas.list_schema
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
+
+    @schemas.retrieve_schema
+    def retrieve(self, request, *args, **kwargs):
+        return super().retrieve(request, *args, **kwargs)
+
+    @schemas.create_schema
     def create(self, request, *args, **kwargs):
         ser = self.get_serializer(data=request.data, context={"request": request})
         ser.is_valid(raise_exception=True)
@@ -49,6 +61,7 @@ class OrderViewSetV1(viewsets.ModelViewSet):
             status=status.HTTP_201_CREATED,
         )
 
+    @schemas.update_schema
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         ser = self.get_serializer(
@@ -61,6 +74,11 @@ class OrderViewSetV1(viewsets.ModelViewSet):
             status=status.HTTP_200_OK,
         )
 
+    @schemas.partial_update_schema
     def partial_update(self, request, *args, **kwargs):
         # Same contract as update (client sends new desired items state)
         return self.update(request, *args, **kwargs)
+
+    @schemas.destroy_schema
+    def destroy(self, request, *args, **kwargs):
+        return super().destroy(request, *args, **kwargs)

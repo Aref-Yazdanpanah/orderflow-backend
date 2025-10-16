@@ -9,7 +9,7 @@ from rest_framework_simplejwt.exceptions import InvalidToken, TokenError
 
 from orderflow.contrib.views import regular_post_action
 
-from . import serializers
+from . import schemas, serializers
 
 User = get_user_model()
 
@@ -38,6 +38,7 @@ class AuthenticationViewSetV1(ViewSet):
         }
         return self.get_serializer_class()(*args, **kwargs)
 
+    @schemas.refresh_token_schema
     @action(detail=False, methods=["post"], url_path="refresh-jwt")
     def refresh_token(self, request):
         serializer = self.get_serializer(data=request.data)
@@ -48,34 +49,40 @@ class AuthenticationViewSetV1(ViewSet):
         return Response(serializer.validated_data, status=status.HTTP_200_OK)
 
     # Mobile/Password sign-in
+    @schemas.password_sign_in_schema
     @action(detail=False, methods=["post"], url_path="sign-in/password")
     @regular_post_action
     def sign_in_password(self, request):
         pass
 
     # Mobile/Password sign-up (customer only)
+    @schemas.password_sign_up_schema
     @action(detail=False, methods=["post"], url_path="sign-up/password")
     @regular_post_action
     def sign_up_password(self, request):
         pass
 
     # OTP sign-in (2-step)
+    @schemas.sign_in_mobile_step1_schema
     @action(detail=False, methods=["post"], url_path="sign-in/mobile/step1")
     @regular_post_action
     def sign_in_mobile_step1(self, request):
         pass
 
+    @schemas.sign_in_otp_step2_schema
     @action(detail=False, methods=["post"], url_path="sign-in/otp/step2")
     @regular_post_action
     def sign_in_otp_step2(self, request):
         pass
 
     # OTP sign-up (2-step, customer only)
+    @schemas.sign_up_mobile_step1_schema
     @action(detail=False, methods=["post"], url_path="sign-up/mobile/step1")
     @regular_post_action
     def sign_up_mobile_step1(self, request):
         pass
 
+    @schemas.sign_up_otp_step2_schema
     @action(detail=False, methods=["post"], url_path="sign-up/otp/step2")
     @regular_post_action
     def sign_up_otp_step2(self, request):
@@ -93,6 +100,7 @@ class UserViewSetV1(RetrieveModelMixin, GenericViewSet):
     def get_serializer_class(self):
         return serializers.UserSerializer
 
+    @schemas.me_schema
     @action(detail=False, methods=["get"], url_path=r"i")
     def me(self, request):
         serializer = self.get_serializer(request.user)
