@@ -129,10 +129,10 @@ class OrderItem(TimeStampedUUIDModel):
         verbose_name_plural = _("order items")
         constraints = [
             models.CheckConstraint(
-                check=models.Q(quantity__gte=1), name="orderitem_quantity_gte_1"
+                condition=models.Q(quantity__gte=1), name="orderitem_quantity_gte_1"
             ),
             models.CheckConstraint(
-                check=models.Q(unit_price__gte=0), name="orderitem_unit_price_gte_0"
+                condition=models.Q(unit_price__gte=0), name="orderitem_unit_price_gte_0"
             ),
             models.UniqueConstraint(
                 fields=["order", "product"], name="uniq_order_product_per_order"
