@@ -106,7 +106,7 @@ cd orderflow
 Create a `.env` file in the project root (same directory as the `Makefile`), and copy the contents from `.env.example`:
 
 ```bash
-cp .env.example .env
+cp env.example .env
 ```
 
 Then, open the `.env` file and configure the following values according to your environment:
